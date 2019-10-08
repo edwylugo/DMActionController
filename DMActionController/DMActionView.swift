@@ -77,6 +77,7 @@ class DMActionView: UIStackView {
         
         let view = UIView(frame: frame)
         let imageContainer = UIView(frame: frame)
+//        let imageContainer = UIView(frame: CGRect(x: 0, y: 0, width: 300, height: 40))
         imageContainer.addSubview(imageView)
         view.addSubview(imageContainer)
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -93,11 +94,13 @@ class DMActionView: UIStackView {
         imageView.heightAnchor.constraint(equalToConstant: 35).isActive = true
         imageView.centerYAnchor.constraint(equalTo: imageContainer.centerYAnchor).isActive = true
         imageView.centerXAnchor.constraint(equalTo: imageContainer.centerXAnchor).isActive = true
-        imageContainer.layer.cornerRadius = 25
+        imageContainer.layer.cornerRadius = 10
         imageContainer.layer.masksToBounds = true
-        imageContainer.backgroundColor = UIColor(white: 0.95, alpha: 1)
+//        imageContainer.backgroundColor = UIColor(white: 0.95, alpha: 1)
+        imageContainer.backgroundColor = UIColor.clear
         titleLabel.textAlignment = .center
         titleLabel.numberOfLines = 2
+        
         
         addArrangedSubview(view)
         addArrangedSubview(titleLabel)

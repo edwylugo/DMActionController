@@ -69,10 +69,23 @@ public final class DMActionController: UIViewController {
      *  MARK: - IBOutlets
      */
     
+    
+    //background da barra open
     @IBOutlet weak var containerView: UIView!
-    @IBOutlet weak var whiteView: UIView!
+    //background primario
+    @IBOutlet weak var whiteView: UIView!{
+        didSet {
+            if #available(iOS 11.0, *) {
+                whiteView.backgroundColor = UIColor(named: "bg_cell")
+            } else {
+                whiteView.backgroundColor = UIColor.clear
+            }
+        }
+    }
+    //barra open
     @IBOutlet weak var dragView: UIView!
     @IBOutlet weak var contentView: UIView!
+    
     @IBOutlet weak var navigationBar: UINavigationBar!
     @IBOutlet weak var contentStackView: UIStackView!
     @IBOutlet weak var cancelButton: DMCancelActionButton!
@@ -201,8 +214,17 @@ public final class DMActionController: UIViewController {
     
     private func setUpContentView() {
         dragView.layer.cornerRadius = 3
+        dragView.layer.frame = CGRect(x: 0, y: 0, width: 200, height: 5)
+        dragView.backgroundColor = UIColor.white
         contentView.maskCorners([.topLeft, .topRight], cornerRadius: 10)
-        contentView.backgroundColor = .white
+        
+    
+        if #available(iOS 11.0, *) {
+            contentView.backgroundColor  = UIColor(named: "bg_cell")
+        } else {
+            contentView.backgroundColor  = UIColor.black
+        }
+        
         let pan = UIPanGestureRecognizer(target: self, action: #selector(draggedView(_:)))
         containerView.addGestureRecognizer(pan)
         let tap = UITapGestureRecognizer(target: self, action: #selector(didTapBackground))
@@ -214,10 +236,23 @@ public final class DMActionController: UIViewController {
         setUpCloseButtonItem()
         if shouldShowNavBar() {
             navigationBar.shadowImage = nil
-            navigationBar.barTintColor = .white
-            navigationBar.backgroundColor = .white
+            if #available(iOS 11.0, *) {
+                navigationBar.barTintColor = UIColor(named: "bg_cell")
+            } else {
+                navigationBar.barTintColor = UIColor.black
+            }
+            if #available(iOS 11.0, *) {
+                navigationBar.backgroundColor = UIColor(named: "bg_cell")
+            } else {
+                navigationBar.barTintColor = UIColor.black
+            }
             navigationBar.tintColor = .black
             navigationBar.barStyle = .default
+            if #available(iOS 11.0, *) {
+                navigationBar.backgroundColor = UIColor(named: "bg_cell")
+            } else {
+                navigationBar.backgroundColor = UIColor.black
+            }
             navigationBarHeightConstraint.constant = 44
             navigationBar.setItems([navigationItem], animated: false)
         } else {
@@ -251,9 +286,9 @@ public final class DMActionController: UIViewController {
     
     private func getTitleViewAttributes() -> (title: TextAttributes, message: TextAttributes) {
         var titleFont: UIFont = .systemFont(ofSize: 17, weight: .semibold)
-        var titleColor: UIColor = .black
+        var titleColor: UIColor = .white
         var messageFont: UIFont = .systemFont(ofSize: 12, weight: .regular)
-        var messageColor: UIColor = .darkGray
+        var messageColor: UIColor = .white
         if let attributes = navigationBar.titleTextAttributes {
             if let font = attributes[.font] as? UIFont {
                 titleFont = font
@@ -282,22 +317,38 @@ public final class DMActionController: UIViewController {
         if shouldShowNavBar() {
             navigationBar.isHidden = false
             navigationBarHeightConstraint.constant = 44
+            if #available(iOS 11.0, *) {
+                navigationBar.backgroundColor = UIColor(named: "bg_cell")
+            } else {
+                navigationBar.backgroundColor = UIColor.black
+            }
         } else {
             navigationBar.isHidden = true
             navigationBarHeightConstraint.constant = 0
+            if #available(iOS 11.0, *) {
+                navigationBar.backgroundColor = UIColor(named: "bg_cell")
+            } else {
+                navigationBar.backgroundColor = UIColor.black
+            }
         }
     }
     
     private func loadViews() {
         contentStackView.subviews.forEach({ $0.removeFromSuperview() })
         cancelButton.action = cancelAction
+        if #available(iOS 11.0, *) {
+            cancelButton.backgroundColor = UIColor(named: "bg_cell")
+        } else {
+            cancelButton.backgroundColor = UIColor.gray
+        }
         let views: [UIView]
         switch preferredStyle! {
         case .table: views = loadActionViews()
         case .collection: views = loadActionViewSections()
         }
         for view in views {
-            contentStackView.addArrangedSubview(view)
+        contentStackView.addArrangedSubview(view)
+            
         }
         contentStackView.layoutIfNeeded()
     }

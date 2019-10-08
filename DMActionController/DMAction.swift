@@ -81,14 +81,14 @@ open class DMAction: NSObject {
     ///
     /// The default value of this property is `UIColor.black`.
     open var textColor: UIColor! {
-        get { return _textColor ?? .black }
+        get { return _textColor ?? .white }
         set { _textColor = newValue }
     }
     
     /// The color that is applied to title of the action’s button.
     ///
     /// The default value of this property is `nil`.
-    open var imageTint: UIColor? = .none
+    open var imageTint: UIColor? = .clear
     
     /// A Boolean value indicating whether the action is currently enabled.
     ///

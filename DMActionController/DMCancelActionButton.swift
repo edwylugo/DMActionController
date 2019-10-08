@@ -22,8 +22,8 @@ class DMCancelActionButton: UIButton {
                 imageView?.tintColor = color
                 imageView?.alpha = action.isEnabled ? 1 : 0.4
             }
-            setTitle(action.title ?? "Cancel", for: .normal)
-            setTitleColor(action.textColor, for: .normal)
+            setTitle(action.title ?? "Cancelar", for: .normal)
+            setTitleColor(.white, for: .normal)
             setTitleColor(action.textColor.withAlphaComponent(0.4), for: .disabled)
             isEnabled = action.isEnabled
         } else {
